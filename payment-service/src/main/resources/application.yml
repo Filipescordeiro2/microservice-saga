@@ -6,8 +6,8 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
     topic:
-      inventory-success: inventory-success
-      inventory-fail: inventory-fail
+      payment-success: payment-success
+      payment-fail: payment-fail
       orchestrator: orchestrator
     consumer:
       group-id: payment-group
@@ -26,7 +26,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  logging:
+logging:
     level:
       org:
         apache:

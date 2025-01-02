@@ -133,4 +133,6 @@ public class KafkaConfig {
     public NewTopic notifyEndingTopic(){
         return buildTopic(ETopics.NOTIFY_ENDING.getTopic());
     }
+
+
 }
