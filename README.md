@@ -359,6 +359,8 @@ Para realizar queries e validar se os dados existem:
 
 ## Autor
 
-### Victor Hugo Negrisoli
+### Filipe Santana Cordeiro
 ### Desenvolvedor de Software Back-End
 
+## Professor
+### Victor Hugo Negrisoli
