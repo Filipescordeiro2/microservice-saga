@@ -12,13 +12,15 @@ spring:
       group-id: order-group
       auto-offset-reset: latest
 
-    data:
-        mongodb:
-            database: admin
-            uri: ${MONGO_DB_URI:mongodb://admin:123456@localhost:27017/admin}
+  data:
+    mongodb:
+      database: admin
+      uri: ${MONGO_DB_URI:mongodb://admin:123456@localhost:27017/admin}
 
 logging:
   level:
     org:
       apache:
         kafka: OFF
+
+
