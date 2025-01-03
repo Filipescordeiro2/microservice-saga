@@ -1,7 +1,8 @@
 # Projeto: Arquitetura de Microsserviços: Padrão Saga Orquestrado
 
 
-![Arquitetura](./imagens/Imagem%20Curso.png)
+![Imagem Curso](https://github.com/user-attachments/assets/4f773d2e-80f5-4af0-ba86-c72965e34717)
+
 
 ### Sumário:
 
@@ -49,7 +50,8 @@
 
 No curso, desenvolveremos a seguinte aquitetura:
 
-![Arquitetura Proposta](./imagens/Arquitetura%20Proposta.png)
+![Arquitetura Proposta](https://github.com/user-attachments/assets/75aba10f-707f-4249-ba81-4b8bf7950364)
+
 
 Em nossa arquitetura, teremos 5 serviços:
 
@@ -145,7 +147,8 @@ http://localhost:3000/swagger-ui.html
 
 Você chegará nesta página:
 
-![Swagger](./imagens/Documentacao.png)
+![Documentacao](https://github.com/user-attachments/assets/05afeee5-9f84-4784-ac19-b667a9c9f69a)
+
 
 As aplicações executarão nas seguintes portas:
 
@@ -171,7 +174,8 @@ http://localhost:8081
 
 Você chegará nesta página:
 
-![Redpanda](./imagens/Redpanda%20Kafka.png)
+![Redpanda Kafka](https://github.com/user-attachments/assets/97428ec5-2f95-4dd5-90bd-3b7fac2718ea)
+
 
 ## Dados da API
 
