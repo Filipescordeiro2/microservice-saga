@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 public class History {
 
-    private Field.Str source;
+    private String source;
     private ESagaStatus status;
     private String message;
     private LocalDateTime createAt;
