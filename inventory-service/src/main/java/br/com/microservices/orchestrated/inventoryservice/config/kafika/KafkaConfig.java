@@ -5,6 +5,7 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,7 @@ public class KafkaConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Value("${spring.kafka..consumer.group-id}")
+    @Value("${spring.kafka.consumer.group-id}")
     private String groupId;
 
     @Value("${spring.kafka.consumer.auto-offset-reset}")
@@ -36,49 +37,47 @@ public class KafkaConfig {
     private String orchestrationTopic;
 
     @Value("${spring.kafka.topic.inventory-success}")
-    private String inventurySuccessTopic;
+    private String inventorySuccessTopic;
 
     @Value("${spring.kafka.topic.inventory-fail}")
-    private String inventuryFailTopic;
-
+    private String inventoryFailTopic;
 
     @Bean
-    public ConsumerFactory<String,String> consumerFactory(){
-            return new DefaultKafkaConsumerFactory<>(consumerProps());
+    public ConsumerFactory<String, String> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerProps());
     }
 
-
     @Bean
-    public ProducerFactory<String,String>producerFactory(){
+    public ProducerFactory<String, String> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerProps());
     }
 
-    private Map<String,Object> producerProps(){
-        var props = new HashMap<String,Object>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServers);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringDeserializer.class);
+    private Map<String, Object> producerProps() {
+        var props = new HashMap<String, Object>();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
         return props;
     }
 
-    private Map<String,Object> consumerProps(){
-        var props = new HashMap<String,Object>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServers);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG,groupId);
+    private Map<String, Object> consumerProps() {
+        var props = new HashMap<String, Object>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,autoOffsetReset);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
 
         return props;
     }
 
     @Bean
-    public KafkaTemplate<String,String>kafkaTemplate(ProducerFactory<String,String>producerFactory){
+    public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
     }
 
-    private NewTopic buildTopic(String name){
+    private NewTopic buildTopic(String name) {
         return TopicBuilder
                 .name(name)
                 .replicas(REPLICATION_COUNT)
@@ -87,17 +86,17 @@ public class KafkaConfig {
     }
 
     @Bean
-    public NewTopic orchestrationTopic(){
+    public NewTopic orchestrationTopic() {
         return buildTopic(orchestrationTopic);
     }
 
     @Bean
-    public NewTopic inventurySuccessTopic(){
-        return buildTopic(inventurySuccessTopic);
+    public NewTopic inventorySuccessTopic() {
+        return buildTopic(inventorySuccessTopic);
     }
 
     @Bean
-    public NewTopic inventuryFailTopic(){
-        return buildTopic(inventuryFailTopic);
+    public NewTopic inventoryFailTopic() {
+        return buildTopic(inventoryFailTopic);
     }
 }

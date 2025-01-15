@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +19,7 @@ import java.util.List;
 public class Event {
 
     private String id;
-    private String trasactionId;
+    private String transactionId;
     private String orderId;
     private Order payload;
     private String source;
@@ -24,4 +27,10 @@ public class Event {
     private List<History>eventHistory;
     private LocalDateTime createAt;
 
+    public void addToHistory(History history){
+        if (isEmpty(eventHistory)){
+            eventHistory = new ArrayList<>();
+        }
+        eventHistory.add(history);
+    }
 }
