@@ -9,15 +9,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class History {
 
     private EEventSource source;
     private ESagaStatus status;
     private String message;
-    private LocalDateTime createAt;
-
+    private LocalDateTime createdAt;
 }

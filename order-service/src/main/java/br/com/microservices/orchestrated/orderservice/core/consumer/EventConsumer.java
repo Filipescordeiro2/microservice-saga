@@ -8,20 +8,20 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@AllArgsConstructor
 @Component
+@AllArgsConstructor
 public class EventConsumer {
 
-    private final EventService eventService;
+    private final EventService service;
     private final JsonUtil jsonUtil;
 
     @KafkaListener(
-            topics = "${spring.kafka.topic.notify-ending}",
-            groupId = "${spring.kafka.consumer.group-id}"
+        groupId = "${spring.kafka.consumer.group-id}",
+        topics = "${spring.kafka.topic.notify-ending}"
     )
     public void consumeNotifyEndingEvent(String payload) {
         log.info("Receiving ending notification event {} from notify-ending topic", payload);
         var event = jsonUtil.toEvent(payload);
-        eventService.notifyEnding(event);
+        service.notifyEnding(event);
     }
 }

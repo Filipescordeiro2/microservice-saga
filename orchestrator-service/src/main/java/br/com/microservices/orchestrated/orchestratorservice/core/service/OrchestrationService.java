@@ -62,12 +62,12 @@ public class OrchestrationService {
 
     private void addHistory(Event event, String message) {
         var history = History
-                .builder()
-                .source(event.getSource())
-                .status(event.getStatus())
-                .message(message)
-                .createdAt(LocalDateTime.now())
-                .build();
+            .builder()
+            .source(event.getSource())
+            .status(event.getStatus())
+            .message(message)
+            .createdAt(LocalDateTime.now())
+            .build();
         event.addToHistory(history);
     }
 

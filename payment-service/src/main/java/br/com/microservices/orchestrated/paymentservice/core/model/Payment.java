@@ -1,17 +1,17 @@
 package br.com.microservices.orchestrated.paymentservice.core.model;
 
 import br.com.microservices.orchestrated.paymentservice.core.enums.EPaymentStatus;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
 @Builder
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "payment")
@@ -37,14 +37,14 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private EPaymentStatus status;
 
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         var now = LocalDateTime.now();
         createdAt = now;
         updatedAt = now;
@@ -52,8 +52,7 @@ public class Payment {
     }
 
     @PreUpdate
-    public void preUptade(){
+    public void preUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
 }

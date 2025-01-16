@@ -1,4 +1,4 @@
-package br.com.microservices.orchestrated.paymentservice.config.kafika;
+package br.com.microservices.orchestrated.productvalidationservice.config.kafka;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -21,8 +21,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
-    private static final Integer PARTITIONS_COUNT = 1;
-    private static final Integer REPLICATION_COUNT = 1;
+    private static final Integer PARTITION_COUNT = 1;
+    private static final Integer REPLICA_COUNT = 1;
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
@@ -34,17 +34,27 @@ public class KafkaConfig {
     private String autoOffsetReset;
 
     @Value("${spring.kafka.topic.orchestrator}")
-    private String orchestrationTopic;
+    private String orchestratorTopic;
 
-    @Value("${spring.kafka.topic.payment-success}")
-    private String paymentSuccessTopic;
+    @Value("${spring.kafka.topic.product-validation-success}")
+    private String productValidationSuccessTopic;
 
-    @Value("${spring.kafka.topic.payment-fail}")
-    private String paymentFailTopic;
+    @Value("${spring.kafka.topic.product-validation-fail}")
+    private String productValidationFailTopic;
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerProps());
+    }
+
+    private Map<String, Object> consumerProps() {
+        var props = new HashMap<String, Object>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
+        return props;
     }
 
     @Bean
@@ -57,18 +67,6 @@ public class KafkaConfig {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-
-        return props;
-    }
-
-    private Map<String, Object> consumerProps() {
-        var props = new HashMap<String, Object>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
-
         return props;
     }
 
@@ -79,24 +77,23 @@ public class KafkaConfig {
 
     private NewTopic buildTopic(String name) {
         return TopicBuilder
-                .name(name)
-                .replicas(REPLICATION_COUNT)
-                .partitions(PARTITIONS_COUNT)
-                .build();
+            .name(name)
+            .partitions(PARTITION_COUNT)
+            .replicas(REPLICA_COUNT)
+            .build();
     }
 
     @Bean
-    public NewTopic orchestrationTopic() {
-        return buildTopic(orchestrationTopic);
+    public NewTopic orchestratorTopic() {
+        return buildTopic(orchestratorTopic);
+    }
+    @Bean
+    public NewTopic productValidationSuccessTopic() {
+        return buildTopic(productValidationSuccessTopic);
     }
 
     @Bean
-    public NewTopic paymentSuccessTopic() {
-        return buildTopic(paymentSuccessTopic);
-    }
-
-    @Bean
-    public NewTopic paymentFailTopic() {
-        return buildTopic(paymentFailTopic);
+    public NewTopic productValidationFailTopic() {
+        return buildTopic(productValidationFailTopic);
     }
 }

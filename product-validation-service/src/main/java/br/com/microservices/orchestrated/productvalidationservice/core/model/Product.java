@@ -1,14 +1,15 @@
 package br.com.microservices.orchestrated.productvalidationservice.core.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.persistence.*;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "product")
 public class Product {
 
@@ -18,5 +19,4 @@ public class Product {
 
     @Column(nullable = false)
     private String code;
-
 }

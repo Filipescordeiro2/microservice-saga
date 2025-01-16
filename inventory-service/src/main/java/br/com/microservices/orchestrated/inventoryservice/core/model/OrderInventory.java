@@ -1,20 +1,19 @@
 package br.com.microservices.orchestrated.inventoryservice.core.model;
 
-
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Order_inventory")
-@Builder
+@Table(name = "order_inventory")
 public class OrderInventory {
 
     @Id
@@ -40,23 +39,21 @@ public class OrderInventory {
     @Column(nullable = false)
     private Integer newQuantity;
 
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         var now = LocalDateTime.now();
         createdAt = now;
         updatedAt = now;
     }
 
     @PreUpdate
-    public void preUptade(){
+    public void preUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
-
 }

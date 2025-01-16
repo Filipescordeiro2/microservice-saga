@@ -1,7 +1,7 @@
 package br.com.microservices.orchestrated.orderservice.core.controller;
 
-import br.com.microservices.orchestrated.orderservice.core.document.Event;
 import br.com.microservices.orchestrated.orderservice.core.dto.EventFilters;
+import br.com.microservices.orchestrated.orderservice.core.document.Event;
 import br.com.microservices.orchestrated.orderservice.core.service.EventService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +15,15 @@ import java.util.List;
 @RequestMapping("/api/event")
 public class EventController {
 
-    private final EventService eventService;
+    private final EventService service;
 
     @GetMapping
-    public Event findByFilters(EventFilters filters){
-        return eventService.findByFilters(filters);
+    public Event findByFilters(EventFilters filters) {
+        return service.findByFilters(filters);
     }
 
     @GetMapping("all")
-    public List<Event> findAll(){
-        return eventService.findAll();
+    public List<Event> findAll() {
+        return service.findAll();
     }
 }
